@@ -63,30 +63,41 @@ Continuous Recording(Immediately a change occurs) per configuration item per acc
 
 You are also charged based on the number of AWS Config rule evaluations recorded and a rule evaluation is recorded every time a resource is evaluated.
 
-First `100,000` rule evaluations costs `$0.001` per rule evaluation per region
-Next `400,000` rule evaluations `(100,001-500,000)` costs `$0.0008` per rule evaluation per region
+First `100,000` rule evaluations costs `$0.001` per rule evaluation per region.
+
+Next `400,000` rule evaluations `(100,001-500,000)` costs `$0.0008` per rule evaluation per region.
+
 `500,001` and more rule evaluations costs `$0.0005` per rule evaluation per region
 
 For example
+
 You have the following usage in the `2` enabled regions in `2` accounts in a given month:
+
 `9,000` configuration items recorded across various resource types(Assuming `300` items per day i.e Lets say `10` items for each of the `30` resources)
+
 `50,000` AWS Config rule evaluations across all config rules in each region in each account
 
 _Cost of configuration items_
+
 Continuous recording : `9000` * `2 regions` * `2 accounts` * `$0.003` = `$108`
+
 Periodic recording : `1` period config item per resource * `30 resources` * `30 days` * `2 regions` * `2 accounts` * `$0.012` = `$43.2`
 
 _Cost of AWS config rules_
+
 First `100,000` evaluations at `$0.001` each = `50,000` * `2 regions` * `2 accounts` * `$0.001` = `$200`
 
 _Total monthly cost_
+
 Continuous recording - `108` + `200` = `$308`
+
 Periodic recording - `43.2` + `200` = `$243.2`
 
 Find the link to the config calculator below
 [ConfigCalculator](https://calculator.aws/#/createCalculator/Config)
 
 Impact of Solution
+
 _Pros_
 - AWS Config provides comprehenzive visibility into the configuration of resources across your aws account as well as a resource inventory.
 - By continuously monitoring resource configurations, AWS Config helps identify unauthorized changes and misconfigurations, allowing for timely remediation.
