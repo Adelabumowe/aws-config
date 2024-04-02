@@ -16,7 +16,7 @@ Plan of execution
 
 Note: These commands must be run by an administrator i.e either using your credentials from the management account or by registering a delegated administrator.
 
-Note: To register a delegated admin, run the below command using your credentials from the management account
+Note: To register a delegated admin, run the below command using your credentials from the management account(Edit the script and add the account ID)
 ```sh
 ./createdelegatedadmin.sh
 ```
