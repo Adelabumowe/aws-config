@@ -1,15 +1,19 @@
 # Setting up Config in AWS Organization
 
 _Summary_
+
 This document outlines the importance of AWS Config, Pricing comparison and the step by step guide to enabling AWS Config in an AWS Organization. The primary aim of enabling aws config is to gain visibility and control over the configuration of resources within your AWS environment
 
 _Goal_
+
 The primary goal is to ensure that all resources are continuous monitored and tracked and if in an event a resource becomes uncompliant, automated remediation strategies are kicked into operation.
 
 Solution
+
 The strategy involves the implentation of a script that automatically creates cloudformation stacks which in turn creates aws config service linked roles and then proceeds to enable AWS Config across the AWS Organization. This proposed method ensures that when a new aws account is added to the organization, AWS config is automatically enabled in all regions in that account. Using this method won't enable AWS Config in the management account; so that can be done by using a script as shown below
 
 Plan of execution
+
 Note: These commands must be run by an administrator i.e either using your credentials from the management account or by registering a delegated administrator.
 
 Note: To register a delegated admin, run the below command using your credentials from the management account
