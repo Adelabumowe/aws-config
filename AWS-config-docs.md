@@ -92,4 +92,5 @@ _Cons_
 - Enabling AWS Config incurs additional cost based on the number of configuration items recorded, the number of active AWS Config rule evaluations, and the number of conformance pack evaluations per region per account.
 
 Long Term Solution
+
 We can define AWS Config managed and custom rules that automatically audit the Organization against predefined security policies like misconfigured security groups and automatically remediate non-compliant resources by triggering AWS Lambda functions to apply necessary changes, such as modifying Security group entries to restrict access.
