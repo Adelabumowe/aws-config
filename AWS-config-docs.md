@@ -1,10 +1,10 @@
 # Setting up Config in AWS Organization
 
-<ins>_Summary_</ins>
+<ins>___Summary___</ins>
 
 This document outlines the importance of AWS Config, Pricing comparison and the step by step guide to enabling AWS Config in an AWS Organization. The primary aim of enabling aws config is to gain visibility and control over the configuration of resources within your AWS environment
 
-<ins>_Goal_</ins>
+<ins>___Goal___</ins>
 
 The primary goal is to ensure that all resources are continuous monitored and tracked and if in an event a resource becomes uncompliant, automated remediation strategies are kicked into operation.
 
@@ -54,7 +54,7 @@ Using the delegated admin profile, run
 ./configaggregator.sh
 ```
 
-<ins>Pricing model</ins>
+<ins>___Pricing model___</ins>
 
 You pay per configuration item delivered in your AWS account per AWS Region and a configuration item is created whenever a resource undergoes a configuration change for example, when a security group is changed. Configuration items can be delivered periodically or continuously
 
@@ -77,17 +77,17 @@ You have the following usage in the `2` enabled regions in `2` accounts in a giv
 
 `50,000` AWS Config rule evaluations across all config rules in each region in each account
 
-<ins>_Cost of configuration items_</ins>
+<ins>___Cost of configuration items___</ins>
 
 Continuous recording : `9000` * `2 regions` * `2 accounts` * `$0.003` = `$108`
 
 Periodic recording : `1` period config item per resource * `30 resources` * `30 days` * `2 regions` * `2 accounts` * `$0.012` = `$43.2`
 
-<ins>_Cost of AWS config rules_</ins>
+<ins>___Cost of AWS config rules___</ins>
 
 First `100,000` evaluations at `$0.001` each = `50,000` * `2 regions` * `2 accounts` * `$0.001` = `$200`
 
-<ins>_Total monthly cost_</ins>
+<ins>___Total monthly cost___</ins>
 
 Continuous recording - `108` + `200` = `$308`
 
@@ -96,7 +96,7 @@ Periodic recording - `43.2` + `200` = `$243.2`
 Find the link to the config calculator below
 [ConfigCalculator](https://calculator.aws/#/createCalculator/Config)
 
-<ins>Impact of Solution</ins>
+<ins>__Impact of Solution__</ins>
 
 _Pros_
 - AWS Config provides comprehenzive visibility into the configuration of resources across your aws account as well as a resource inventory.
@@ -106,6 +106,6 @@ _Pros_
 _Cons_
 - Enabling AWS Config incurs additional cost based on the number of configuration items recorded, the number of active AWS Config rule evaluations, and the number of conformance pack evaluations per region per account.
 
-<ins>Long Term Solution</ins>
+<ins>__Long Term Solution__</ins>
 
 We can define AWS Config managed and custom rules that automatically audit the Organization against predefined security policies like misconfigured security groups and automatically remediate non-compliant resources by triggering AWS Lambda functions to apply necessary changes, such as modifying Security group entries to restrict access.
