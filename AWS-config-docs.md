@@ -11,6 +11,9 @@ The primary goal is to ensure that all resources are continuous monitored and tr
 <ins>Solution</ins>
 
 The strategy involves the implentation of a script that automatically creates cloudformation stacks which in turn creates aws config service linked roles and then proceeds to enable AWS Config across the AWS Organization. This proposed method ensures that when a new aws account is added to the organization, AWS config is automatically enabled in all regions in that account. Using this method won't enable AWS Config in the management account; so that can be done by using a script as shown below
+```sh
+./configmasteraccount.sh
+```
 
 <ins>Plan of execution</ins>
 
