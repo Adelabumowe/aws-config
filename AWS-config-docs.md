@@ -57,6 +57,15 @@ Using the delegated admin profile, run
 ./configaggregator.sh
 ```
 
+Step 4: Deploy AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks. Conformance packs can only be deployed using your AWS Org's master account creds.
+
+```sh
+./conformancepacks.sh
+```
+
+[List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
+
+
 <ins>___Pricing model___</ins>
 
 You pay per configuration item delivered in your AWS account per AWS Region and a configuration item is created whenever a resource undergoes a configuration change for example, when a security group is changed. Configuration items can be delivered periodically or continuously
