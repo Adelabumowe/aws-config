@@ -72,5 +72,9 @@ aws s3api put-bucket-policy \
            }"
 
 
+# Location of conformance pack
+echo -n "Input the s3 uri for the conformance pack: "
+read conformancepack
+
 # Deploy the conformance pack
-aws configservice put-organization-conformance-pack --organization-conformance-pack-name="OrgS3ConformancePack" --template-s3-uri="file://<PATH TO YOUR TEMPLATE>/<TEMPLATE FILENAME>" --delivery-s3-bucket=$bucketname
+aws configservice put-organization-conformance-pack --organization-conformance-pack-name="OrgS3ConformancePack" --template-s3-uri="$conformancepack" --delivery-s3-bucket=$bucketname
