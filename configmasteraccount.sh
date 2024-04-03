@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# Register a delegated adminfor cloudformation(Edit memberaccountId)
+aws organizations register-delegated-administrator \
+  --service-principal=member.org.stacksets.cloudformation.amazonaws.com \
+  --account-id="memberAccountId"
+
+# Enable delegated admin to deploy and manage aws config rules
+
+aws organizations enable-aws-service-access --service-principal=config-multiaccountsetup.amazonaws.com
+
+aws organizations enable-aws-service-access --service-principal=config.amazonaws.com
+
+# Register a delegated admin for aws config(Edit memberaccountId)
+aws organizations register-delegated-administrator --service-principal=config-multiaccountsetup.amazonaws.com --account-id MemberAccountID
+
+aws organizations register-delegated-administrator --service-principal=config.amazonaws.com --account-id MemberAccountID
+
 # Fetch the account ID of the management account
 root_arn=$(aws organizations list-roots --query "Roots[].Arn" --output text)
 account_id=$(echo "$root_arn" | cut -d':' -f5)
@@ -18,11 +34,11 @@ aws cloudformation create-stack \
   --parameters ParameterKey=AdministratorAccountId,ParameterValue=$account_id \
   --capabilities CAPABILITY_NAMED_IAM
 
-sleep 120
+sleep 60
 
 # Create a stackset in the management account
 aws cloudformation create-stack-set \
-  --stack-set-name my-final-awsconfig-stackset \
+  --stack-set-name my-final-final-awsconfig-stackset \
   --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/EnableAWSConfig.yml \
   --capabilities CAPABILITY_IAM
 
@@ -41,7 +57,7 @@ json_array+="]"
 
 # Create stack instances in the all regions in the management account
 aws cloudformation create-stack-instances \
-  --stack-set-name my-final-awsconfig-stackset \
+  --stack-set-name my-final-final-awsconfig-stackset \
   --accounts "$account_id" \
-  --regions "$json_array" \
-  --operation-preferences FailureToleranceCount=0,MaxConcurrentCount=1
+  --regions '["us-east-1","us-west-1"]' \
+  --operation-preferences FailureToleranceCount=7,MaxConcurrentCount=7,RegionConcurrencyType=PARALLEL
