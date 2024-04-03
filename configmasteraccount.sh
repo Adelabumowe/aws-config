@@ -59,5 +59,5 @@ json_array+="]"
 aws cloudformation create-stack-instances \
   --stack-set-name my-final-final-awsconfig-stackset \
   --accounts "$account_id" \
-  --regions '["us-east-1","us-west-1"]' \
+  --regions "$json_array" \
   --operation-preferences FailureToleranceCount=7,MaxConcurrentCount=7,RegionConcurrencyType=PARALLEL
