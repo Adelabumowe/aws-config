@@ -10,57 +10,49 @@ The primary goal is to ensure that all resources are continuous monitored and tr
 
 <ins>Solution</ins>
 
-The strategy involves the implentation of a script that automatically creates cloudformation stacks which in turn creates aws config service linked roles and then proceeds to enable AWS Config across the AWS Organization. This proposed method ensures that when a new aws account is added to the organization, AWS config is automatically enabled in all regions in that account. Using this method won't enable AWS Config in the management account; so that can be done by using a script as shown below
+The strategy involves the implentation of a script that automatically creates cloudformation stacks which in turn creates aws config service linked roles and then proceeds to enable AWS Config across the AWS Organization. This proposed method ensures that when a new aws account is added to the organization, AWS config is automatically enabled in all regions in that account.
+
+<ins>Plan of execution</ins>
+
+Note: These commands must be run by an administrator i.e either using your credentials from the management account or by registering a delegated administrator set by the master account.
+
+####Using the management account
+
+Step 1: Create a cloudformation stackset which deploys a stack that enables aws config across all accounts in the organization
+
+Using the management profile, run 
+```sh
+./enableconfigwithmaster.sh
+```
+
+Ensure that all accounts and regions have aws config enabled before proceeding to the next step
+
+Step 2: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
+
+Using the management profile/delegated admin, run 
+```sh
+./aggregatorandconformancepacks.sh
+```
+
+####Using a delegated admin account
+
+Step 1: Create a delegated admin and enable aws config in the master account
+
 ```sh
 ./configmasteraccount.sh
 ```
 
-<ins>Plan of execution</ins>
-
-Note: These commands must be run by an administrator i.e either using your credentials from the management account or by registering a delegated administrator.
-
-Note: To register a delegated admin, run the below command using your credentials from the management account___(Edit the script and add the preferred account ID)___
-```sh
-./createdelegatedadmin.sh
-```
-
-Step 1: Create a cloudformation stackset which deploys a stack that creates aws config service linked roles in all target accounts in your organization 
-
-Using the management profile, run 
-```sh
-./servicelinkedrole.sh
-```
-Using the delegated admin profile, run 
-```sh
-./servicelinkedroledelegated.sh
-```
-
-Step 2: When step 1 is done, proceed to create a cloudformation stackset which deploys a stack that enables aws config across all accounts in the organization
-
-Using the management profile, run 
-```sh
-./config.sh
-```
-Using the delegated admin profile, run 
+Step 2: Using the delegated admin profile, enable aws config across all accounts and all enabled regions in the organization
 ```sh
 ./configdelegated.sh
 ```
 
-Step 3: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts
+Ensure that all accounts and regions have aws config enabled before proceeding to the next step
 
-Using the management profile, run 
-```sh
-./configaggregator.sh
-```
-Using the delegated admin profile, run 
-```sh
-./configaggregator.sh
-```
-
-Step 4: Deploy AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks. Conformance packs can only be deployed using your AWS Org's master account creds.
+Step 3: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
 
 ```sh
-./conformancepacks.sh
+./aggregatorandconformancepacks.sh
 ```
 
 [List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
