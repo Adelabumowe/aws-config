@@ -16,9 +16,9 @@ The strategy involves the implentation of a script that automatically creates cl
 
 Note: These commands must be run by an administrator i.e either using your credentials from the management account or by registering a delegated administrator set by the master account.
 
-####Using the management account
+Using the management account
 
-Step 1: Create a cloudformation stackset which deploys a stack that enables aws config across all accounts in the organization
+<ins>Step 1</ins>: Create a cloudformation stackset which deploys a stack that enables aws config across all accounts in the organization
 
 Using the management profile, run 
 ```sh
@@ -27,35 +27,37 @@ Using the management profile, run
 
 Ensure that all accounts and regions have aws config enabled before proceeding to the next step
 
-Step 2: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
+<ins>Step 2</ins>: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
 
 Using the management profile/delegated admin, run 
 ```sh
 ./aggregatorandconformancepacks.sh
 ```
 
-####Using a delegated admin account
+Using a delegated admin account
 
-Step 1: Create a delegated admin and enable aws config in the master account
+<ins>Step 1</ins>: Create a delegated admin and enable aws config in the master account
 
 ```sh
 ./configmasteraccount.sh
 ```
 
-Step 2: Using the delegated admin profile, enable aws config across all accounts and all enabled regions in the organization
+<ins>Step 2</ins>: Using the delegated admin profile, enable aws config across all accounts and all enabled regions in the organization
+
 ```sh
 ./configdelegated.sh
 ```
 
 Ensure that all accounts and regions have aws config enabled before proceeding to the next step
 
-Step 3: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
+<ins>Step 3</ins>: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
 
 ```sh
 ./aggregatorandconformancepacks.sh
 ```
 
 [List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
+
 
 
 <ins>___Pricing model___</ins>
@@ -98,7 +100,10 @@ Continuous recording - `108` + `200` = `$308`
 Periodic recording - `43.2` + `200` = `$243.2`
 
 Find the link to the config calculator below
+
 [ConfigCalculator](https://calculator.aws/#/createCalculator/Config)
+
+
 
 <ins>__Impact of Solution__</ins>
 
@@ -109,6 +114,8 @@ _Pros_
 
 _Cons_
 - Enabling AWS Config incurs additional cost based on the number of configuration items recorded, the number of active AWS Config rule evaluations, and the number of conformance pack evaluations per region per account.
+
+
 
 <ins>__Long Term Solution__</ins>
 
