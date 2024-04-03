@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit the script immediately if any command returns a non-zero status
+set -e
+
 # Create a stackset
 aws cloudformation create-stack-set --stack-set-name myconfig --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/EnableAWSConfigForOrganizations.yml --permission-model SERVICE_MANAGED --auto-deployment Enabled=true,RetainStacksOnAccountRemoval=true --region us-east-1 --call-as DELEGATED_ADMIN
 

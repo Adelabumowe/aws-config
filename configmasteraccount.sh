@@ -1,9 +1,15 @@
 #!/bin/bash
 
-# Register a delegated adminfor cloudformation(Edit memberaccountId)
+# Exit the script immediately if any command returns a non-zero status
+set -e
+
+# Register a delegated admin for cloudformation(Edit memberaccountId)
+echo -n "Input the 12 digit delegated admin account ID: "
+read memberAccountId
+
 aws organizations register-delegated-administrator \
   --service-principal=member.org.stacksets.cloudformation.amazonaws.com \
-  --account-id="memberAccountId"
+  --account-id="$memberAccountId"
 
 # Enable delegated admin to deploy and manage aws config rules
 
@@ -12,9 +18,9 @@ aws organizations enable-aws-service-access --service-principal=config-multiacco
 aws organizations enable-aws-service-access --service-principal=config.amazonaws.com
 
 # Register a delegated admin for aws config(Edit memberaccountId)
-aws organizations register-delegated-administrator --service-principal=config-multiaccountsetup.amazonaws.com --account-id MemberAccountID
+aws organizations register-delegated-administrator --service-principal=config-multiaccountsetup.amazonaws.com --account-id $memberAccountId
 
-aws organizations register-delegated-administrator --service-principal=config.amazonaws.com --account-id MemberAccountID
+aws organizations register-delegated-administrator --service-principal=config.amazonaws.com --account-id $memberAccountId
 
 # Fetch the account ID of the management account
 root_arn=$(aws organizations list-roots --query "Roots[].Arn" --output text)
