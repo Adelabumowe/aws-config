@@ -117,6 +117,6 @@ _Cons_
 
 
 
-<ins>###__Long Term Solution__</ins>
+<ins>__Long Term Solution__</ins>
 
 We can define AWS Config managed and custom rules that automatically audit the Organization against predefined security policies like misconfigured security groups and automatically remediate non-compliant resources by triggering AWS Lambda functions to apply necessary changes, such as modifying Security group entries to restrict access.
