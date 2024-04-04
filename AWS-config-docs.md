@@ -87,7 +87,7 @@ Console output - conformance packs
 ![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/conformancepacks.png)
 
 Console output - aggregator
-![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/aggregrator-in-delegated-admin-account.png)
+![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/EndGoal.png)
 
 [List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
 
@@ -132,7 +132,7 @@ Continuous recording - `108` + `200` = `$308`
 
 Periodic recording - `43.2` + `200` = `$243.2`
 
-Find the link to the config calculator below
+Find the link to the config pricing and calculator below
 
 [ConfigPricing](https://aws.amazon.com/config/pricing/)
 
@@ -155,5 +155,3 @@ _Cons_
 <ins>__Long Term Solution__</ins>
 
 We can define AWS Config managed and custom rules that automatically audit the Organization against predefined security policies like misconfigured security groups and automatically remediate non-compliant resources by triggering AWS Lambda functions to apply necessary changes, such as modifying Security group entries to restrict access.
-
-![end-goal](https://configtestpictures.s3.us-west-1.amazonaws.com/EndGoal.png)
