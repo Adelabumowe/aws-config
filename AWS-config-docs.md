@@ -17,7 +17,7 @@ The strategy involves the implentation of a script that automatically creates cl
 Note: These commands must be run by an administrator i.e 
 
 - Using your credentials from the management account or
-- By registering a delegated administrator set by the master account.
+- By registering a delegated administrator(can only be created from the organization's management account).
 
 Using the management account
 
@@ -41,23 +41,53 @@ Using a delegated admin account
 
 <ins>Step 1</ins>: Create a delegated admin and enable aws config in the master account
 
+__Note__Use the master account profile to run this script as it creates a delegated admin and deploys a self-managed stackset in the master account which enables aws config in the specified region and accounts. See below images
+
 ```sh
 ./configmasteraccount.sh
 ```
 
-<ins>Step 2</ins>: Using the delegated admin profile, enable aws config across all accounts and all enabled regions in the organization
+Cli output
+![Script-result](https://configtestpictures.s3.us-west-1.amazonaws.com/configmasteraccount.png)
+
+Console output
+![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/stacksetinmasteraccount.png)
+
+<ins>Step 2</ins>: Using the delegated admin creds, enable aws config across all accounts and all enabled regions in the organization. 
+
+This script creates a stackset in the masteraccount using the delegated admin credentials. The stackset in turn creates cloudformation stacks that enables aws config in every enabled region in every account asides the master account(This was created in the first step). See below images
 
 ```sh
 ./configdelegated.sh
 ```
 
+Cli output
+![Script-result](https://configtestpictures.s3.us-west-1.amazonaws.com/orgwidestacksetscript.png)
+
+Console output - stackset
+![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/stack-set-for-org-wide-in-master-account.png)
+
+Console output - sample cloudformation stack in a target region in a target account
+![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/stacks-in-each-region-in-each-account.png)
+
 Ensure that all accounts and regions have aws config enabled before proceeding to the next step
 
-<ins>Step 3</ins>: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
+<ins>Step 3</ins>: Deploy AWS Config Conformance Packs of your chosing across your Organization to help manage compliance of your AWS resources at scale using common frameworks and also set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts.
+
+__Note__:  This script might take a while to complete
 
 ```sh
 ./aggregatorandconformancepacks.sh
 ```
+
+Cli output
+![Script-result](https://configtestpictures.s3.us-west-1.amazonaws.com/aggregator-conformance-script.png)
+
+Console output - conformance packs
+![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/conformancepacks.png)
+
+Console output - aggregator in action
+![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/aggregrator-in-delegated-admin-account.png)
 
 [List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
 
@@ -104,6 +134,7 @@ Periodic recording - `43.2` + `200` = `$243.2`
 
 Find the link to the config calculator below
 
+[ConfigPricing](https://aws.amazon.com/config/pricing/)
 [ConfigCalculator](https://calculator.aws/#/createCalculator/Config)
 
 
@@ -123,3 +154,5 @@ _Cons_
 <ins>__Long Term Solution__</ins>
 
 We can define AWS Config managed and custom rules that automatically audit the Organization against predefined security policies like misconfigured security groups and automatically remediate non-compliant resources by triggering AWS Lambda functions to apply necessary changes, such as modifying Security group entries to restrict access.
+
+![end-goal](https://configtestpictures.s3.us-west-1.amazonaws.com/EndGoal.png)
