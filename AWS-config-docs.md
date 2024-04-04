@@ -17,7 +17,7 @@ The strategy involves the implentation of a script that automatically creates cl
 Note: These commands must be run by an administrator i.e 
 
 - Using your credentials from the management account or
-- By registering a delegated administrator(can only be created from the organization's management account) - Recommended.
+- By registering a delegated administrator(can only be created from the organization's management account) - Recommended
 
 Using the management account
 
