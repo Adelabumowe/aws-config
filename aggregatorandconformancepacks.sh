@@ -23,8 +23,7 @@ echo -n "Input a unique name of the delivery bucket(It must start with awsconfig
 read bucketname
 
 aws s3api create-bucket \
-    --bucket $bucketname \
-    --region us-east-1
+    --bucket $bucketname
 
 # Fetch org ID
 root_arn=$(aws organizations list-roots --query "Roots[].Arn" --output text)
@@ -69,14 +68,14 @@ aws s3api put-bucket-policy \
            }"
 
 
+# Create Aggregator
+aws configservice put-configuration-aggregator --configuration-aggregator-name MyAggregator --organization-aggregation-source "{\"RoleArn\": \"$rolearn\",\"AllAwsRegions\": true}"
+
 # Location of conformance pack
 echo -n "Input the s3 uri for the conformance pack: "
 read conformancepack
 
+sleep 60
+
 # Deploy the conformance pack
 aws configservice put-organization-conformance-pack --organization-conformance-pack-name="OrgS3ConformancePack" --template-s3-uri="$conformancepack" --delivery-s3-bucket=$bucketname
-
-sleep 300
-
-# Create Aggregator
-aws configservice put-configuration-aggregator --configuration-aggregator-name MyAggregator --organization-aggregation-source "{\"RoleArn\": \"$rolearn\",\"AllAwsRegions\": true}"

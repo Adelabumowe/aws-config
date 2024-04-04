@@ -4,7 +4,7 @@
 set -e
 
 # Create a stackset
-aws cloudformation create-stack-set --stack-set-name myconfig --template-url https://cfntemplatesconfig.s3.amazonaws.com/EnableAWSConfigForOrganizations.yml --permission-model SERVICE_MANAGED --auto-deployment Enabled=true,RetainStacksOnAccountRemoval=true --region us-east-1 --call-as DELEGATED_ADMIN
+aws cloudformation create-stack-set --stack-set-name myconfig --template-url https://cfntemplatesconfig.s3.amazonaws.com/EnableAWSConfigForOrganizations.yml --permission-model SERVICE_MANAGED --auto-deployment Enabled=true,RetainStacksOnAccountRemoval=true --call-as DELEGATED_ADMIN
 
 # Get a list of all enabled regions in the organization
 regions=$(aws ec2 describe-regions --query "Regions[].RegionName" --output text --region us-east-1)
