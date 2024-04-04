@@ -24,7 +24,7 @@ _Using a delegated admin account_
 
 <ins>Step 1</ins>: Create a delegated admin and enable aws config in the master account
 
-_Note_ Use the master account profile to run this script as it creates a delegated admin and deploys a self-managed stackset in the master account which enables aws config in all enabled regions in the master account. See below images
+_Note_ Use the master account profile to run this script as it creates a delegated admin(for deploying cloudformation stacks and aws config rules) and deploys a self-managed stackset in the master account which enables aws config in all enabled regions in the master account. See below images
 
 ```sh
 ./configmasteraccount.sh
