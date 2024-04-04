@@ -58,7 +58,7 @@ echo -n "Enter the region to deploy your stackset in: "
 read stacksetregion
 
 # Create a stackset for target accounts
-aws cloudformation create-stack-set --stack-set-name myconfig --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/EnableAWSConfigForOrganizations.yml --permission-model SERVICE_MANAGED --auto-deployment Enabled=true,RetainStacksOnAccountRemoval=true --region $stacksetregion
+aws cloudformation create-stack-set --stack-set-name myconfig --template-url https://cfntemplatesconfig.s3.amazonaws.com/EnableAWSConfigForOrganizations.yml --permission-model SERVICE_MANAGED --auto-deployment Enabled=true,RetainStacksOnAccountRemoval=true --region $stacksetregion
 
 
 aws cloudformation create-stack-instances --stack-set-name myconfig --deployment-targets OrganizationalUnitIds="$orgrootid" --regions "$json_array" --operation-preferences FailureToleranceCount=7,MaxConcurrentCount=7,RegionConcurrencyType=PARALLEL

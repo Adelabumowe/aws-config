@@ -2,19 +2,22 @@
 
 <ins>___Summary___</ins>
 
-This document outlines the importance of AWS Config, Pricing comparison and the step by step guide to enabling AWS Config in an AWS Organization. The primary aim of enabling aws config is to gain visibility and control over the configuration of resources within your AWS environment
+This document outlines the importance of AWS Config, the step by step guide to enabling AWS Config in Loyalty AWS Organization. The primary aim of enabling aws config is to gain visibility and control over the configuration of resources within your AWS environment
 
 <ins>___Goal___</ins>
 
-The primary goal is to ensure that all resources are continuous monitored and tracked and if in an event a resource becomes uncompliant, automated remediation strategies are kicked into operation.
+The primary goal is to ensure that all resources are continuously monitored and tracked and if in an event a resource becomes uncompliant, automated remediation strategies are kicked into operation.
 
 <ins>Solution</ins>
 
-The strategy involves the implentation of a script that automatically creates cloudformation stacks which in turn creates aws config service linked roles and then proceeds to enable AWS Config across the AWS Organization. This proposed method ensures that when a new aws account is added to the organization, AWS config is automatically enabled in all regions in that account.
+The strategy involves the implentation of a script that automatically creates cloudformation stacks which in turn enables AWS Config across Loyalty AWS Organization. This proposed method ensures that when a new aws account is added to the organization, AWS config is automatically enabled in all regions in that account.
 
 <ins>Plan of execution</ins>
 
-Note: These commands must be run by an administrator i.e either using your credentials from the management account or by registering a delegated administrator set by the master account.
+Note: These commands must be run by an administrator i.e 
+
+- Using your credentials from the management account or
+- By registering a delegated administrator set by the master account.
 
 Using the management account
 

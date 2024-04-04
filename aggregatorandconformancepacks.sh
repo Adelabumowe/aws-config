@@ -18,9 +18,6 @@ policyarn=$(aws iam list-policies --query 'Policies[?PolicyName==`OrgConfigPolic
 # Attach a policy to a role
 aws iam attach-role-policy --role-name OrgConfigRole --policy-arn "$policyarn"
 
-# Create Aggregator
-aws configservice put-configuration-aggregator --configuration-aggregator-name MyAggregator --organization-aggregation-source "{\"RoleArn\": \"$rolearn\",\"AllAwsRegions\": true}"
-
 # Create delivery bucket (Bucket must start with awsconfigconforms)
 echo -n "Input a unique name of the delivery bucket(It must start with awsconfigconforms): "
 read bucketname
@@ -78,3 +75,8 @@ read conformancepack
 
 # Deploy the conformance pack
 aws configservice put-organization-conformance-pack --organization-conformance-pack-name="OrgS3ConformancePack" --template-s3-uri="$conformancepack" --delivery-s3-bucket=$bucketname
+
+sleep 300
+
+# Create Aggregator
+aws configservice put-configuration-aggregator --configuration-aggregator-name MyAggregator --organization-aggregation-source "{\"RoleArn\": \"$rolearn\",\"AllAwsRegions\": true}"
