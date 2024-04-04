@@ -19,25 +19,8 @@ Note: These commands must be run by an administrator i.e
 - Using your credentials from the management account or
 - By registering a delegated administrator(can only be created from the organization's management account) - Recommended
 
-Using the management account
 
-<ins>Step 1</ins>: Create a cloudformation stackset which deploys a stack that enables aws config across all accounts in the organization
-
-Using the management profile, run 
-```sh
-./enableconfigwithmaster.sh
-```
-
-Ensure that all accounts and regions have aws config enabled before proceeding to the next step
-
-<ins>Step 2</ins>: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
-
-Using the management profile/delegated admin, run 
-```sh
-./aggregatorandconformancepacks.sh
-```
-
-Using a delegated admin account
+_Using a delegated admin account_
 
 <ins>Step 1</ins>: Create a delegated admin and enable aws config in the master account
 
@@ -88,6 +71,25 @@ Console output - conformance packs
 
 Console output - aggregator
 ![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/EndGoal.png)
+
+
+_Using the management account_
+
+<ins>Step 1</ins>: Create a cloudformation stackset which deploys a stack that enables aws config across all accounts in the organization
+
+Using the management profile, run 
+```sh
+./enableconfigwithmaster.sh
+```
+
+Ensure that all accounts and regions have aws config enabled before proceeding to the next step
+
+<ins>Step 2</ins>: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
+
+Using the management profile/delegated admin, run 
+```sh
+./aggregatorandconformancepacks.sh
+```
 
 [List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
 
