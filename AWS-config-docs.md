@@ -41,7 +41,7 @@ Using a delegated admin account
 
 <ins>Step 1</ins>: Create a delegated admin and enable aws config in the master account
 
-__Note__Use the master account profile to run this script as it creates a delegated admin and deploys a self-managed stackset in the master account which enables aws config in the specified region and accounts. See below images
+_Note_ Use the master account profile to run this script as it creates a delegated admin and deploys a self-managed stackset in the master account which enables aws config in all enabled regions in the master account. See below images
 
 ```sh
 ./configmasteraccount.sh
@@ -74,7 +74,7 @@ Ensure that all accounts and regions have aws config enabled before proceeding t
 
 <ins>Step 3</ins>: Deploy AWS Config Conformance Packs of your chosing across your Organization to help manage compliance of your AWS resources at scale using common frameworks and also set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts.
 
-__Note__:  This script might take a while to complete
+_Note_:  This script might take a while to complete
 
 ```sh
 ./aggregatorandconformancepacks.sh
@@ -86,7 +86,7 @@ Cli output
 Console output - conformance packs
 ![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/conformancepacks.png)
 
-Console output - aggregator in action
+Console output - aggregator
 ![Console-result](https://configtestpictures.s3.us-west-1.amazonaws.com/aggregrator-in-delegated-admin-account.png)
 
 [List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
@@ -135,6 +135,7 @@ Periodic recording - `43.2` + `200` = `$243.2`
 Find the link to the config calculator below
 
 [ConfigPricing](https://aws.amazon.com/config/pricing/)
+
 [ConfigCalculator](https://calculator.aws/#/createCalculator/Config)
 
 
