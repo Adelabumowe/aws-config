@@ -127,7 +127,7 @@ You have the following usage in the `2` enabled regions in `2` accounts in a giv
 
 `50,000` AWS Config rule evaluations across all config rules in each region in each account
 
-`1` [conformance pack](https://github.com/awslabs/aws-config-rules/blob/master/aws-config-conformance-packs/Operational-Best-Practices-for-CIS-AWS-v1.4-Level1.yaml) for CIS v1.4.0 benchmark containing 43 AWS Config rules with 200 rule evaluations per AWS Config rule
+`1` [conformance pack](https://github.com/awslabs/aws-config-rules/blob/master/aws-config-conformance-packs/Operational-Best-Practices-for-CIS-AWS-v1.4-Level1.yaml) for CIS v1.4.0 benchmark containing `43` AWS Config rules with `200` rule evaluations per AWS Config rule
 
 <ins>___Cost of configuration items___</ins>
 
