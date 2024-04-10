@@ -165,7 +165,7 @@ First `100,000` conformance pack evaluations at `$0.001` each = `34,400` * `$0.0
 
 <ins>___Total monthly cost___</ins>
 
-Cost of Configuration Item recorded + Cost of conformance pack evaluations = `108`+ `34.4` = `142.4`
+Cost of Configuration Item recorded + Cost of conformance pack evaluations = `108`+ `34.4` = `$142.4`
 
 Find the link to the config pricing and calculator below
 
