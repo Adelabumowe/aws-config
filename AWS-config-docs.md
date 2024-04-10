@@ -99,8 +99,9 @@ Using the management profile/delegated admin, run
 
 You pay per configuration item delivered in your AWS account per AWS Region and a configuration item is created whenever a resource undergoes a configuration change for example, when a security group is changed. Configuration items can be delivered periodically or continuously
 
-Periodic Recording(Every 24hrs, only if a change occurs) per configuration item per account per region is $0.0012
-Continuous Recording(Immediately a change occurs) per configuration item per account per region is $0.003
+Periodic Recording(Every 24hrs, only if a change occurs) per configuration item per account per region is `$0.0012`
+
+Continuous Recording(Immediately a change occurs) per configuration item per account per region is `$0.003`
 
 You are also charged based on the number of AWS Config rule evaluations recorded and a rule evaluation is recorded every time a resource is evaluated.
 
@@ -119,15 +120,13 @@ Next `400,000` conformance pack evaluations `(100,001-500,000)` costs `$0.0008` 
 `500,001` and more conformance pack evaluations costs `$0.0005` per conformance pack evaluation per region
 
 
-<ins>For example</ins>
+<ins>Example 1</ins>
 
 You have the following usage in the `2` enabled regions in `2` accounts in a given month:
 
 `9,000` configuration items recorded across various resource types(Assuming `300` items per day i.e Lets say `10` items for each of the `30` resources)
 
 `50,000` AWS Config rule evaluations across all config rules in each region in each account
-
-`1` [conformance pack](https://github.com/awslabs/aws-config-rules/blob/master/aws-config-conformance-packs/Operational-Best-Practices-for-CIS-AWS-v1.4-Level1.yaml) for CIS v1.4.0 benchmark containing `43` AWS Config rules with `200` rule evaluations per AWS Config rule
 
 <ins>___Cost of configuration items___</ins>
 
@@ -139,17 +138,34 @@ Periodic recording : `1` period config item per resource * `30 resources` * `30 
 
 First `100,000` evaluations at `$0.001` each = `50,000` * `2 regions` * `2 accounts` * `$0.001` = `$200`
 
+<ins>___Total monthly cost___</ins>
+
+Continuous recording - `108` + `200` = `$308`
+
+Periodic recording - `43.2` + `200` = `$243.2`
+
+
+<ins>Example 2</ins>
+
+You have the following usage in the `2` enabled regions in `2` accounts in a given month:
+
+`9,000` configuration items recorded across various resource types
+
+`1` [conformance pack](https://github.com/awslabs/aws-config-rules/blob/master/aws-config-conformance-packs/Operational-Best-Practices-for-CIS-AWS-v1.4-Level1.yaml) for CIS v1.4.0 benchmark containing `43` AWS Config rules with `200` rule evaluations per AWS Config rule
+
+<ins>___Cost of configuration items___</ins>
+
+Continuous recording : `9000` * `2 regions` * `2 accounts` * `$0.003` = `$108`
+
 <ins>___Cost of conformance pack___</ins>
 
-Total no of conformance pack evaluation = `1` * `43` * `200` * `2 regions` * `2 accounts` = `34,400` conformance pacls evaluations
+Total no of conformance pack evaluation = `1` * `43` * `200` * `2 regions` * `2 accounts` = `34,400` conformance packs evaluations
 
 First `100,000` conformance pack evaluations at `$0.001` each = `34,400` * `$0.001` = `$34.4`
 
 <ins>___Total monthly cost___</ins>
 
-Continuous recording - `108` + `200` + `34.4` = `$342.4`
-
-Periodic recording - `43.2` + `200` + `34.4` = `$277.6`
+Cost of Configuration Item recorded + Cost of conformance pack evaluations = `108`+ `34.4` = `$142.4`
 
 Find the link to the config pricing and calculator below
 
