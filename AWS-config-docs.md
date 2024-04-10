@@ -110,6 +110,15 @@ Next `400,000` rule evaluations `(100,001-500,000)` costs `$0.0008` per rule eva
 
 `500,001` and more rule evaluations costs `$0.0005` per rule evaluation per region
 
+You are also charged for conformance pack evaluation
+
+First `100,000` conformance pack evaluations costs `$0.001` per conformance pack evaluation per region.
+
+Next `400,000` conformance pack evaluations `(100,001-500,000)` costs `$0.0008` per conformance pack evaluation per region.
+
+`500,001` and more conformance pack evaluations costs `$0.0005` per conformance pack evaluation per region
+
+
 <ins>For example</ins>
 
 You have the following usage in the `2` enabled regions in `2` accounts in a given month:
@@ -117,6 +126,8 @@ You have the following usage in the `2` enabled regions in `2` accounts in a giv
 `9,000` configuration items recorded across various resource types(Assuming `300` items per day i.e Lets say `10` items for each of the `30` resources)
 
 `50,000` AWS Config rule evaluations across all config rules in each region in each account
+
+`1` [conformance pack](https://github.com/awslabs/aws-config-rules/blob/master/aws-config-conformance-packs/Operational-Best-Practices-for-CIS-AWS-v1.4-Level1.yaml) for CIS v1.4.0 benchmark containing `43` AWS Config rules with `200` rule evaluations per AWS Config rule
 
 <ins>___Cost of configuration items___</ins>
 
@@ -128,11 +139,17 @@ Periodic recording : `1` period config item per resource * `30 resources` * `30 
 
 First `100,000` evaluations at `$0.001` each = `50,000` * `2 regions` * `2 accounts` * `$0.001` = `$200`
 
+<ins>___Cost of conformance pack___</ins>
+
+Total no of conformance pack evaluation = `1` * `43` * `200` * `2 regions` * `2 accounts` = `34,400` conformance pacls evaluations
+
+First `100,000` conformance pack evaluations at `$0.001` each = `34,400` * `$0.001` = `$34.4`
+
 <ins>___Total monthly cost___</ins>
 
-Continuous recording - `108` + `200` = `$308`
+Continuous recording - `108` + `200` + `34.4` = `$342.4`
 
-Periodic recording - `43.2` + `200` = `$243.2`
+Periodic recording - `43.2` + `200` + `34.4` = `$277.6`
 
 Find the link to the config pricing and calculator below
 
