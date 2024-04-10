@@ -2,7 +2,7 @@
 
 <ins>___Summary___</ins>
 
-This document outlines the importance of AWS Config, the step by step guide to enabling AWS Config in Loyalty AWS Organization. The primary aim of enabling aws config is to gain visibility and control over the configuration of resources within your AWS environment
+This document outlines the importance of AWS Config, the step by step guide to enabling AWS Config in Loyalty's AWS Organization. The primary aim of enabling aws config is to gain visibility and control over the configuration of resources within Loyalty's AWS environment
 
 <ins>___Goal___</ins>
 
@@ -16,7 +16,7 @@ The strategy involves the implentation of a script that automatically creates cl
 
 Note: These commands must be run by an administrator i.e 
 
-- Using your credentials from the management account or
+- Using the credentials from the management account or
 - By registering a delegated administrator(can only be created from the organization's management account) - Recommended
 
 
@@ -38,7 +38,7 @@ Console output
 
 <ins>Step 2</ins>: Using the delegated admin creds, enable aws config across all accounts and all enabled regions in the organization. 
 
-This script creates a stackset in the masteraccount using the delegated admin credentials. The stackset in turn creates cloudformation stacks that enables aws config in every enabled region in every account asides the master account(This was created in the first step). See below images
+This script creates a stackset in the master account using the delegated admin credentials. The stackset in turn creates cloudformation stacks that enables aws config in every enabled region in every account asides the master account(This was created in the first step). See below images
 
 ```sh
 ./configdelegated.sh
@@ -55,9 +55,7 @@ Console output - sample cloudformation stack in a target region in a target acco
 
 Ensure that all accounts and regions have aws config enabled before proceeding to the next step
 
-<ins>Step 3</ins>: Deploy AWS Config Conformance Packs of your chosing across your Organization to help manage compliance of your AWS resources at scale using common frameworks and also set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts.
-
-_Note_:  This script might take a while to complete
+<ins>Step 3</ins>: Deploy AWS Config Conformance Packs across Loyalty's AWS Organization to help manage compliance of all AWS resources at scale using common frameworks and set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts.
 
 ```sh
 ./aggregatorandconformancepacks.sh
@@ -84,7 +82,7 @@ Using the management profile, run
 
 Ensure that all accounts and regions have aws config enabled before proceeding to the next step
 
-<ins>Step 2</ins>: Set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts and deploys AWS Config Conformance Packs across your Organization to help manage compliance of your AWS resources at scale using common frameworks.
+<ins>Step 2</ins>: Deploy AWS Config Conformance Packs across Loyalty's AWS Organization to help manage compliance of all AWS resources at scale using common frameworks and set up an aggregator which collects AWS Config configuration and Compliance data from multiple regions in multiple accounts.
 
 Using the management profile/delegated admin, run 
 ```sh
@@ -94,16 +92,15 @@ Using the management profile/delegated admin, run
 [List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
 
 
-
 <ins>___Pricing model___</ins>
 
-You pay per configuration item delivered in your AWS account per AWS Region and a configuration item is created whenever a resource undergoes a configuration change for example, when a security group is changed. Configuration items can be delivered periodically or continuously
+Loyalty pays per configuration item delivered per AWS account per AWS Region and a configuration item is created whenever a resource undergoes a configuration change for example, when a security group is changed. Configuration items can be delivered periodically or continuously
 
 Periodic Recording(Every 24hrs, only if a change occurs) per configuration item per account per region is `$0.0012`
 
 Continuous Recording(Immediately a change occurs) per configuration item per account per region is `$0.003`
 
-You are also charged based on the number of AWS Config rule evaluations recorded and a rule evaluation is recorded every time a resource is evaluated.
+Loyalty is also charged based on the number of AWS Config rule evaluations recorded and a rule evaluation is recorded every time a resource is evaluated.
 
 First `100,000` rule evaluations costs `$0.001` per rule evaluation per region.
 
@@ -111,7 +108,7 @@ Next `400,000` rule evaluations `(100,001-500,000)` costs `$0.0008` per rule eva
 
 `500,001` and more rule evaluations costs `$0.0005` per rule evaluation per region
 
-You are also charged for conformance pack evaluation
+Lastly, Loyalty is also charged for conformance pack evaluation
 
 First `100,000` conformance pack evaluations costs `$0.001` per conformance pack evaluation per region.
 
@@ -119,53 +116,68 @@ Next `400,000` conformance pack evaluations `(100,001-500,000)` costs `$0.0008` 
 
 `500,001` and more conformance pack evaluations costs `$0.0005` per conformance pack evaluation per region
 
+<ins>Billing breakdown for enabling AWS Config in Loyalty's AWS Organization</ins>
 
-<ins>Example 1</ins>
+To ensure overall security complaince in Loyalty's AWS Organization, we recommend CIS and PCI-DSS conformance packs
 
-You have the following usage in the `2` enabled regions in `2` accounts in a given month:
+Removing duplicate AWS config rule entries to prevent being billed for the same rule in two different conformance packs,
 
-`9,000` configuration items recorded across various resource types(Assuming `300` items per day i.e Lets say `10` items for each of the `30` resources)
+- CIS conformance pack has `60` AWS Config rules
+- PCI-DSS conformance pack has `97` AWS Config rules
 
-`50,000` AWS Config rule evaluations across all config rules in each region in each account
-
-<ins>___Cost of configuration items___</ins>
-
-Continuous recording : `9000` * `2 regions` * `2 accounts` * `$0.003` = `$108`
-
-Periodic recording : `1` period config item per resource * `30 resources` * `30 days` * `2 regions` * `2 accounts` * `$0.012` = `$43.2`
-
-<ins>___Cost of AWS config rules___</ins>
-
-First `100,000` evaluations at `$0.001` each = `50,000` * `2 regions` * `2 accounts` * `$0.001` = `$200`
-
-<ins>___Total monthly cost___</ins>
-
-Continuous recording - `108` + `200` = `$308`
-
-Periodic recording - `43.2` + `200` = `$243.2`
+Assuming `10,000` configuration items recorded across various resource types per account per region and `300` AWS Config rule evaluations per AWS Config rule, lets take a look at 3 use cases
 
 
-<ins>Example 2</ins>
+_Use case I(Enabling AWS Config in ONLY the Infrastructure OU)_
 
-You have the following usage in the `2` enabled regions in `2` accounts in a given month:
+Total no of accounts = `4`
 
-`9,000` configuration items recorded across various resource types
+Total no of regions = `5`
 
-`1` [conformance pack](https://github.com/awslabs/aws-config-rules/blob/master/aws-config-conformance-packs/Operational-Best-Practices-for-CIS-AWS-v1.4-Level1.yaml) for CIS v1.4.0 benchmark containing `43` AWS Config rules with `200` rule evaluations per AWS Config rule
+Total no of conformance packs = `2` i.e (60 + 97) * 300 = `47,100` conformance pack evaluations
 
-<ins>___Cost of configuration items___</ins>
+Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `47,100` * `$0.001` = `$47.1`
 
-Continuous recording : `9000` * `2 regions` * `2 accounts` * `$0.003` = `$108`
+Cost of configuration items = `10,000` * `$0.003` = `$30`
 
-<ins>___Cost of conformance pack___</ins>
+Total AWS Config bill 
 
-Total no of conformance pack evaluation = `1` * `43` * `200` * `2 regions` * `2 accounts` = `34,400` conformance packs evaluations
+(`$47.1` + `$30`) * 4 * 5 = `$1,542`
 
-First `100,000` conformance pack evaluations at `$0.001` each = `34,400` * `$0.001` = `$34.4`
 
-<ins>___Total monthly cost___</ins>
+_Use case II(Enabling AWS Config in all production accounts)_
 
-Cost of Configuration Item recorded + Cost of conformance pack evaluations = `108`+ `34.4` = `$142.4`
+Total no of accounts = `18`
+
+Total no of regions = `5`
+
+Total no of conformance packs = `2` i.e (60 + 97) * 300 = `47,100` conformance pack evaluations
+
+Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `47,100` * `$0.001` = `$47.1`
+
+Cost of configuration items = `10,000` * `$0.003` = `$30`
+
+Total AWS Config bill 
+
+(`$47.1` + `$30`) * 18 * 5 = `$6,939`
+
+
+_Use case III(Enabling AWS Config in all accounts)_
+
+Total no of accounts = `59`
+
+Total no of regions = `5`
+
+Total no of conformance packs = `2` i.e (60 + 97) * 300 = `47,100` conformance pack evaluations
+
+Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `47,100` * `$0.001` = `$47.1`
+
+Cost of configuration items = `10,000` * `$0.003` = `$30`
+
+Total AWS Config bill 
+
+(`$47.1` + `$30`) * 59 * 5 = `$22,744.5`
+
 
 Find the link to the config pricing and calculator below
 
