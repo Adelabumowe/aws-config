@@ -164,7 +164,7 @@ Total AWS Config bill
 
 _Use case III(Enabling AWS Config in all accounts)_
 
-Total no of accounts = `59`
+Total no of accounts = `57`
 
 Total no of regions = `5`
 
@@ -176,7 +176,7 @@ Cost of configuration items = `10,000` * `$0.003` = `$30`
 
 Total AWS Config bill 
 
-(`$47.1` + `$30`) * 59 * 5 = `$22,744.5`
+(`$47.1` + `$30`) * 57 * 5 = `$21,973.5`
 
 
 Find the link to the config pricing and calculator below
