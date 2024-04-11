@@ -24,7 +24,7 @@ _Using a delegated admin account_
 
 <ins>Step 1</ins>: Create a delegated admin and enable aws config in the master account
 
-_Note_ Use the master account profile to run this script as it creates a delegated admin(for deploying cloudformation stacks and aws config rules) and deploys a self-managed stackset in the master account which enables aws config in all enabled regions in the master account. See below images
+> **Note:** Use the master account profile to run this script as it creates a delegated admin(for deploying cloudformation stacks and aws config rules) and deploys a self-managed stackset in the master account which enables aws config in all enabled regions in the master account. See below images
 
 ```sh
 ./configmasteraccount.sh
@@ -92,7 +92,7 @@ Using the management profile/delegated admin, run
 [List of Conformance Packs](https://github.com/awslabs/aws-config-rules/tree/master/aws-config-conformance-packs)
 
 
-<ins>___Pricing model___</ins>
+## Pricing model
 
 Loyalty pays per configuration item delivered per AWS account per AWS Region and a configuration item is created whenever a resource undergoes a configuration change for example, when a security group is changed. Configuration items can be delivered periodically or continuously
 
@@ -116,7 +116,8 @@ Next `400,000` conformance pack evaluations `(100,001-500,000)` costs `$0.0008` 
 
 `500,001` and more conformance pack evaluations costs `$0.0005` per conformance pack evaluation per region
 
-<ins>Billing breakdown for enabling AWS Config in Loyalty's AWS Organization</ins>
+
+## Billing breakdown for enabling AWS Config in Loyalty's AWS Organization
 
 To ensure overall security complaince in Loyalty's AWS Organization, we recommend CIS and PCI-DSS conformance packs
 
@@ -125,7 +126,7 @@ Removing duplicate AWS config rule entries to prevent being billed for the same 
 - CIS conformance pack has `60` AWS Config rules
 - PCI-DSS conformance pack has `97` AWS Config rules
 
-Assuming `10,000` configuration items recorded across various resource types per account per region and `300` AWS Config rule evaluations per AWS Config rule, lets take a look at 3 use cases
+Assuming per month, `10,000` configuration items recorded across various resource types per account per region and `300` AWS Config rule evaluations per AWS Config rule, lets take a look at 3 use cases
 
 
 _Use case I(Enabling AWS Config in ONLY the Infrastructure OU)_
@@ -140,9 +141,7 @@ Cost of conformance packs for the first 100,000 conformance pack evaluations at 
 
 Cost of configuration items = `10,000` * `$0.003` = `$30`
 
-Total AWS Config bill 
-
-(`$47.1` + `$30`) * 4 * 5 = `$1,542`
+Total monthly AWS Config bill = (`$47.1` + `$30`) * 4 * 5 = `$1,542`
 
 
 _Use case II(Enabling AWS Config in all production accounts)_
@@ -157,9 +156,7 @@ Cost of conformance packs for the first 100,000 conformance pack evaluations at 
 
 Cost of configuration items = `10,000` * `$0.003` = `$30`
 
-Total AWS Config bill 
-
-(`$47.1` + `$30`) * 18 * 5 = `$6,939`
+Total monthly AWS Config bill = (`$47.1` + `$30`) * 18 * 5 = `$6,939`
 
 
 _Use case III(Enabling AWS Config in all accounts)_
@@ -174,9 +171,7 @@ Cost of conformance packs for the first 100,000 conformance pack evaluations at 
 
 Cost of configuration items = `10,000` * `$0.003` = `$30`
 
-Total AWS Config bill 
-
-(`$47.1` + `$30`) * 57 * 5 = `$21,973.5`
+Total monthly AWS Config bill = (`$47.1` + `$30`) * 57 * 5 = `$21,973.5`
 
 
 Find the link to the config pricing and calculator below
@@ -187,7 +182,7 @@ Find the link to the config pricing and calculator below
 
 
 
-<ins>__Impact of Solution__</ins>
+## Impact of Solution
 
 _Pros_
 - AWS Config provides comprehenzive visibility into the configuration of resources Loyalty's AWS account as well as resource inventory.
@@ -199,6 +194,6 @@ _Cons_
 
 
 
-<ins>__Long Term Solution__</ins>
+## Long Term Solution
 
 We can define AWS Config managed and custom rules that automatically audit the Organization against predefined security policies like misconfigured security groups and automatically remediate non-compliant resources by triggering AWS Lambda functions to apply necessary changes, such as modifying Security group entries to restrict access.
