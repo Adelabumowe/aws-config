@@ -1,4 +1,4 @@
-# Setting up Config in AWS Organization
+# Setting up AWS Config in Loyalty's AWS Organization
 
 <ins>___Summary___</ins>
 
@@ -190,7 +190,7 @@ Find the link to the config pricing and calculator below
 <ins>__Impact of Solution__</ins>
 
 _Pros_
-- AWS Config provides comprehenzive visibility into the configuration of resources across your aws account as well as a resource inventory.
+- AWS Config provides comprehenzive visibility into the configuration of resources Loyalty's AWS account as well as resource inventory.
 - By continuously monitoring resource configurations, AWS Config helps identify unauthorized changes and misconfigurations, allowing for timely remediation.
 - AWS Config facilitates compliance management by providing automated assessments against predefined or custom rules, helping organizations adhere to regulatory requirements and internal policies.
 
