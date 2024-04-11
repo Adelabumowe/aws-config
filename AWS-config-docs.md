@@ -1,4 +1,4 @@
-# Setting up Config in AWS Organization
+# Setting up AWS Config in Loyalty's AWS Organization
 
 <ins>___Summary___</ins>
 
