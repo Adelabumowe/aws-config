@@ -104,7 +104,7 @@ Using the management profile/delegated admin, run
 
 Loyalty is charged based on the number of configuration items recorded, the number of active AWS Config rule evaluations and the number of conformance pack evaluations in all accounts.
 
-__1)Configuration item__
+__1) Configuration item__
 
 A configuration item is created whenever a resource undergoes a configuration change for example, when a security group is changed and configuration items can be delivered periodically or continuously
 
@@ -112,7 +112,7 @@ Periodic Recording(Every 24hrs, only if a change occurs) per configuration item 
 
 Continuous Recording(Immediately a change occurs) per configuration item per account per region is `$0.003`
 
-__2)Config Rule Evaluation__
+__2) Config Rule Evaluation__
 
 Loyalty is also charged based on the number of AWS Config rule evaluations recorded and a rule evaluation is recorded every time a resource is evaluated.
 
@@ -122,7 +122,7 @@ Next `400,000` rule evaluations `(100,001-500,000)` costs `$0.0008` per rule eva
 
 `500,001` and more rule evaluations costs `$0.0005` per rule evaluation per region
 
-__3)Conformance packs__
+__3) Conformance packs Evaluation__
 
 Lastly, Loyalty is also charged for conformance pack evaluation
 
@@ -133,6 +133,7 @@ Next `400,000` conformance pack evaluations `(100,001-500,000)` costs `$0.0008` 
 `500,001` and more conformance pack evaluations costs `$0.0005` per conformance pack evaluation per region
 
 > **Note:** If no aws config rule is enabled outside the conformance pack, Loyalty only pays for conformance pack evaluation.
+
 
 ## Billing breakdown for enabling AWS Config in Loyalty's AWS Organization
 
