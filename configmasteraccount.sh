@@ -42,9 +42,13 @@ aws cloudformation create-stack \
 
 sleep 60
 
+# Management stack name
+echo -n "Input the management stackset name: "
+read managementstackset
+
 # Create a stackset in the management account
 aws cloudformation create-stack-set \
-  --stack-set-name my-final-final-awsconfig-stackset \
+  --stack-set-name $managementstackset \
   --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/EnableAWSConfig.yml \
   --capabilities CAPABILITY_IAM
 
@@ -63,7 +67,7 @@ json_array+="]"
 
 # Create stack instances in the all regions in the management account
 aws cloudformation create-stack-instances \
-  --stack-set-name my-final-final-awsconfig-stackset \
+  --stack-set-name $managementstackset \
   --accounts "$account_id" \
   --regions "$json_array" \
   --operation-preferences FailureToleranceCount=7,MaxConcurrentCount=7,RegionConcurrencyType=PARALLEL

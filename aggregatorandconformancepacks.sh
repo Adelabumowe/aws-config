@@ -68,14 +68,52 @@ aws s3api put-bucket-policy \
            }"
 
 
+# Location of conformance pack
+echo -n "Input the name of aggregator: "
+read aggregator
+
 # Create Aggregator
-aws configservice put-configuration-aggregator --configuration-aggregator-name MyAggregator --organization-aggregation-source "{\"RoleArn\": \"$rolearn\",\"AllAwsRegions\": true}"
+aws configservice put-configuration-aggregator --configuration-aggregator-name $aggregator --organization-aggregation-source "{\"RoleArn\": \"$rolearn\",\"AllAwsRegions\": true}"
 
 # Location of conformance pack
-echo -n "Input the s3 uri for the conformance pack: "
-read conformancepack
+echo -n "Input the s3 uri for CIS conformance pack: "
+read conformancepack1
+
+echo -n "Input the s3 uri for PCI-DSS conformance pack: "
+read conformancepack2
 
 sleep 60
 
-# Deploy the conformance pack
-aws configservice put-organization-conformance-pack --organization-conformance-pack-name="OrgS3ConformancePack" --template-s3-uri="$conformancepack" --delivery-s3-bucket=$bucketname
+# Get list of AWS regions
+regions=$(aws ec2 describe-regions --query "Regions[].RegionName" --output text --region us-east-1)
+
+# Convert the regions into a JSON array
+json_array="["
+for region in $regions; do
+    json_array+="\"$region\","
+done
+json_array="${json_array%,}"  # Remove the trailing comma
+json_array+="]"
+
+echo "Regions to push conformance packs: $json_array"
+
+# Loop through each region and run the AWS Config Service commands
+for region in $regions; do
+    echo "Pushing conformance packs to region: $region"
+
+    # Put the Organization Conformance Pack for CIS
+    aws configservice put-organization-conformance-pack \
+        --organization-conformance-pack-name "OrgCISConformancePack" \
+        --template-s3-uri "$conformancepack1" \
+        --delivery-s3-bucket "$bucketname" \
+        --region "$region"
+
+    # Put the Organization Conformance Pack for PCI DSS
+    aws configservice put-organization-conformance-pack \
+        --organization-conformance-pack-name "OrgPCIDSSConformancePack" \
+        --template-s3-uri "$conformancepack2" \
+        --delivery-s3-bucket "$bucketname" \
+        --region "$region"
+
+    echo "Completed processing region: $region"
+done
