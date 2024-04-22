@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit the script immediately if any command returns a non-zero status
-set -e
+# set -e
 
 # Create an IAM role for your AWS Config aggregator
 aws iam create-role --role-name OrgConfigRole --assume-role-policy-document "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"config.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}" --description "Role for organizational AWS Config aggregator"
