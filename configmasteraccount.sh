@@ -4,44 +4,44 @@
 set -e
 
 # Register a delegated admin for cloudformation(Edit memberaccountId)
-echo -n "Input the 12 digit delegated admin account ID: "
-read memberAccountId
+# echo -n "Input the 12 digit delegated admin account ID: "
+# read memberAccountId
 
-aws organizations register-delegated-administrator \
-  --service-principal=member.org.stacksets.cloudformation.amazonaws.com \
-  --account-id="$memberAccountId"
+# aws organizations register-delegated-administrator \
+#   --service-principal=member.org.stacksets.cloudformation.amazonaws.com \
+#   --account-id="$memberAccountId"
 
-# Enable delegated admin to deploy and manage aws config rules
+# # Enable delegated admin to deploy and manage aws config rules
 
-aws organizations enable-aws-service-access --service-principal=config-multiaccountsetup.amazonaws.com
+# aws organizations enable-aws-service-access --service-principal=config-multiaccountsetup.amazonaws.com
 
-aws organizations enable-aws-service-access --service-principal=config.amazonaws.com
+# aws organizations enable-aws-service-access --service-principal=config.amazonaws.com
 
-# Register a delegated admin for aws config(Edit memberaccountId)
-aws organizations register-delegated-administrator --service-principal=config-multiaccountsetup.amazonaws.com --account-id $memberAccountId
+# # Register a delegated admin for aws config(Edit memberaccountId)
+# aws organizations register-delegated-administrator --service-principal=config-multiaccountsetup.amazonaws.com --account-id $memberAccountId
 
-aws organizations register-delegated-administrator --service-principal=config.amazonaws.com --account-id $memberAccountId
-
-
-# Fetch the account ID of the management account
-root_arn=$(aws organizations list-roots --query "Roots[].Arn" --output text)
-account_id=$(echo "$root_arn" | cut -d':' -f5)
-
-# create roles for self-managed stack set
-
-aws cloudformation create-stack \
-  --stack-name adminrolestack \
-  --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/AWSCloudFormationStackSetAdministrationRole.yml \
-  --capabilities CAPABILITY_NAMED_IAM
+# aws organizations register-delegated-administrator --service-principal=config.amazonaws.com --account-id $memberAccountId
 
 
-aws cloudformation create-stack \
-  --stack-name targetrolestack \
-  --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/AWSCloudFormationStackSetExecutionRole.yml \
-  --parameters ParameterKey=AdministratorAccountId,ParameterValue=$account_id \
-  --capabilities CAPABILITY_NAMED_IAM
+# # Fetch the account ID of the management account
+# root_arn=$(aws organizations list-roots --query "Roots[].Arn" --output text)
+# account_id=$(echo "$root_arn" | cut -d':' -f5)
 
-sleep 60
+# # create roles for self-managed stack set
+
+# aws cloudformation create-stack \
+#   --stack-name adminrolestack \
+#   --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/AWSCloudFormationStackSetAdministrationRole.yml \
+#   --capabilities CAPABILITY_NAMED_IAM
+
+
+# aws cloudformation create-stack \
+#   --stack-name targetrolestack \
+#   --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/AWSCloudFormationStackSetExecutionRole.yml \
+#   --parameters ParameterKey=AdministratorAccountId,ParameterValue=$account_id \
+#   --capabilities CAPABILITY_NAMED_IAM
+
+# sleep 60
 
 # Management stack name
 echo -n "Input the management stackset name: "
