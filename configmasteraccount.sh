@@ -22,6 +22,7 @@ aws organizations register-delegated-administrator --service-principal=config-mu
 
 aws organizations register-delegated-administrator --service-principal=config.amazonaws.com --account-id $memberAccountId
 
+
 # Fetch the account ID of the management account
 root_arn=$(aws organizations list-roots --query "Roots[].Arn" --output text)
 account_id=$(echo "$root_arn" | cut -d':' -f5)
@@ -46,10 +47,15 @@ sleep 60
 echo -n "Input the management stackset name: "
 read managementstackset
 
+# Central logging bucket name
+echo -n "Input the Central logging bucket name: "
+read centralbucket
+
 # Create a stackset in the management account
 aws cloudformation create-stack-set \
   --stack-set-name $managementstackset \
-  --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/EnableAWSConfig.yml \
+  --template-url https://cfntemplatesconfig.s3.amazonaws.com/EnableAWSConfigForLoyaltyOrganizations.yml \
+  --parameters ParameterKey=S3BucketName,ParameterValue=$centralbucket \
   --capabilities CAPABILITY_IAM
 
 
@@ -71,3 +77,5 @@ aws cloudformation create-stack-instances \
   --accounts "$account_id" \
   --regions "$json_array" \
   --operation-preferences FailureToleranceCount=7,MaxConcurrentCount=7,RegionConcurrencyType=PARALLEL
+
+echo "AWS Config enabled across all regions in the management account."

@@ -40,24 +40,33 @@ aws cloudformation create-stack \
 
 sleep 60
 
+# Management stack name
+echo -n "Input the management stackset name: "
+read managementstackset
+
 # Create a stackset in the management account
 aws cloudformation create-stack-set \
-  --stack-set-name my-final-final-awsconfig-stackset \
+  --stack-set-name $managementstackset \
   --template-url https://s3.amazonaws.com/cloudformation-stackset-sample-templates-us-east-1/EnableAWSConfig.yml \
   --capabilities CAPABILITY_IAM
 
 
 # Create stack instances in the all regions in the management account
 aws cloudformation create-stack-instances \
-  --stack-set-name my-final-final-awsconfig-stackset \
+  --stack-set-name $managementstackset \
   --accounts "$account_id" \
   --regions "$json_array" \
   --operation-preferences FailureToleranceCount=7,MaxConcurrentCount=7,RegionConcurrencyType=PARALLEL
 
 # Create a stackset for target accounts
-aws cloudformation create-stack-set --stack-set-name myconfig --template-url https://cfntemplatesconfig.s3.amazonaws.com/EnableAWSConfigForOrganizations.yml --permission-model SERVICE_MANAGED --auto-deployment Enabled=true,RetainStacksOnAccountRemoval=true
+
+# Management stack name
+echo -n "Input the general stackset name: "
+read generalstackset
+
+aws cloudformation create-stack-set --stack-set-name $generalstackset --template-url https://cfntemplatesconfig.s3.amazonaws.com/EnableAWSConfigForOrganizations.yml --permission-model SERVICE_MANAGED --auto-deployment Enabled=true,RetainStacksOnAccountRemoval=true
 
 
-aws cloudformation create-stack-instances --stack-set-name myconfig --deployment-targets OrganizationalUnitIds="$orgrootid" --regions "$json_array" --operation-preferences FailureToleranceCount=7,MaxConcurrentCount=7,RegionConcurrencyType=PARALLEL
+aws cloudformation create-stack-instances --stack-set-name $generalstackset --deployment-targets OrganizationalUnitIds="$orgrootid" --regions "$json_array" --operation-preferences FailureToleranceCount=7,MaxConcurrentCount=7,RegionConcurrencyType=PARALLEL
 
 echo "AWS Config enabled across all regions in the organization."

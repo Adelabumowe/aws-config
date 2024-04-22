@@ -81,11 +81,11 @@ Console output - aggregator
 
 _Using the management account_
 
-<ins>Step 1</ins>: Create a cloudformation stackset which deploys a stack that enables aws config across all accounts in the organization
+<ins>Step 1</ins>: Create a cloudformation stackset which deploys a stack that enables aws config across all specified accounts in the organization
 
 Using the management profile, run 
 ```sh
-./enableconfigwithmaster.sh
+./prodaccount.sh
 ```
 
 Ensure that all accounts and regions have aws config enabled before proceeding to the next step
@@ -137,59 +137,73 @@ Next `400,000` conformance pack evaluations `(100,001-500,000)` costs `$0.0008` 
 
 ## Billing breakdown for enabling AWS Config in Loyalty's AWS Organization
 
-To ensure overall security complaince in Loyalty's AWS Organization, we recommend CIS and PCI-DSS conformance packs
-
-Removing duplicate AWS config rule entries to prevent being billed for the same rule in two different conformance packs,
+To ensure overall security complaince in Loyalty's AWS Organization, we recommend CIS conformance packs
 
 - CIS conformance pack has `60` AWS Config rules
-- PCI-DSS conformance pack has `97` AWS Config rules
 
-Assuming per month, `10,000` configuration items were recorded across various resource types per account per region and `300` AWS Config rule evaluations per AWS Config rule, lets take a look at 3 use cases
+Assuming per month, `4,557` configuration items were recorded across various resource types per account per region and `150` AWS Config rule evaluations per AWS Config rule, lets take a look at 3 use cases
 
 
 <ins>Use case I(Enabling AWS Config in ONLY the Infrastructure OU)</ins>
 
 Total no of accounts = `4`
 
+Total no of regions = `17`
+
+Total no of conformance packs = `1` i.e 60 * 150 = `9,000` conformance pack evaluations
+
+Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `9,000` * `$0.001` = `$9`
+
+Cost of configuration items = `4,557` * `$0.003` = `$13.671`
+
+Total monthly AWS Config bill = (`$9` + `$13.671`) * 4 * 17 = `$1,542`
+
+
+<ins>Use case II(Enabling AWS Config in all production accounts assuming 5/17 enabled regions have workloads)</ins>
+
+Total no of accounts = `36`
+
 Total no of regions = `5`
 
-Total no of conformance packs = `2` i.e (60 + 97) * 300 = `47,100` conformance pack evaluations
+> **Note:** Since no resources are in the remaining 12 enabled regions, configuration items won't be recorded and as such, there won't be any conformance pack evaluations in those regions.
 
-Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `47,100` * `$0.001` = `$47.1`
+Total no of conformance packs = `1` i.e 60 * 150 = `9,000` conformance pack evaluations
 
-Cost of configuration items = `10,000` * `$0.003` = `$30`
+Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `9,000` * `$0.001` = `$9`
 
-Total monthly AWS Config bill = (`$47.1` + `$30`) * 4 * 5 = `$1,542`
+Cost of configuration items = `4,557` * `$0.003` = `$13.671`
 
-
-<ins>Use case II(Enabling AWS Config in all production accounts)</ins>
-
-Total no of accounts = `18`
-
-Total no of regions = `5`
-
-Total no of conformance packs = `2` i.e (60 + 97) * 300 = `47,100` conformance pack evaluations
-
-Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `47,100` * `$0.001` = `$47.1`
-
-Cost of configuration items = `10,000` * `$0.003` = `$30`
-
-Total monthly AWS Config bill = (`$47.1` + `$30`) * 18 * 5 = `$6,939`
+Total monthly AWS Config bill = (`$9` + `$13.671`) * 36 * 5 = `$4,081`
 
 
-<ins>Use case III(Enabling AWS Config in all accounts)</ins>
+<ins>Use case III(Enabling AWS Config in all production accounts assuming all enabled regions have workloads)</ins>
+
+Total no of accounts = `36`
+
+Total no of regions = `17`
+
+Total no of conformance packs = `1` i.e 60 * 150 = `9,000` conformance pack evaluations
+
+Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `9,000` * `$0.001` = `$9`
+
+Cost of configuration items = `4,557` * `$0.003` = `$13.671`
+
+Total monthly AWS Config bill = (`$9` + `$13.671`) * 36 * 17 = `$13,875`
+
+
+<ins>Use case IV(Enabling AWS Config in all accounts)</ins>
 
 Total no of accounts = `57`
 
-Total no of regions = `5`
+Total no of regions = `17`
 
-Total no of conformance packs = `2` i.e (60 + 97) * 300 = `47,100` conformance pack evaluations
+Total no of conformance packs = `1` i.e 60 * 150 = `9,000` conformance pack evaluations
 
-Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `47,100` * `$0.001` = `$47.1`
+Cost of conformance packs for the first 100,000 conformance pack evaluations at $0.001 each = `9,000` * `$0.001` = `$9`
 
-Cost of configuration items = `10,000` * `$0.003` = `$30`
+Cost of configuration items = `4,557` * `$0.003` = `$13.671`
 
-Total monthly AWS Config bill = (`$47.1` + `$30`) * 57 * 5 = `$21,973.5`
+Total monthly AWS Config bill = (`$9` + `$13.671`) * 57 * 17 = `$21,969`
 
 
 Find the link to the config pricing and calculator below
