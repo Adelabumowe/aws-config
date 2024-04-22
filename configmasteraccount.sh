@@ -23,9 +23,9 @@ set -e
 # aws organizations register-delegated-administrator --service-principal=config.amazonaws.com --account-id $memberAccountId
 
 
-# # Fetch the account ID of the management account
-# root_arn=$(aws organizations list-roots --query "Roots[].Arn" --output text)
-# account_id=$(echo "$root_arn" | cut -d':' -f5)
+# Fetch the account ID of the management account
+root_arn=$(aws organizations list-roots --query "Roots[].Arn" --output text)
+account_id=$(echo "$root_arn" | cut -d':' -f5)
 
 # # create roles for self-managed stack set
 
