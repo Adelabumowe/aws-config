@@ -1,0 +1,9 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Create AWS Config Service-Linked Role'
+
+Resources:
+  ConfigServiceLinkedRole:
+    Type: 'AWS::IAM::ServiceLinkedRole'
+    Properties:
+      AWSServiceName: 'config.amazonaws.com'
+      Description: 'Service-linked role for AWS Config to support related AWS services'
